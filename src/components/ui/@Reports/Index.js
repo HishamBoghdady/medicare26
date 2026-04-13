@@ -1,0 +1,6 @@
+export { default as ControlDialog } from "../@Reports/ControlDialog"
+export { default as DellDialog } from "../@Reports/DellDialog"
+export { default as EditDialog } from "../@Reports/EditDialog"
+export { default as ExitDialog } from "../@Reports/ExitDialog"
+export { default as FilterDialog } from "../@Reports/FilterDialog"
+export { default as InfoDialog } from "../@Reports/InfoDialog"

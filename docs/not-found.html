@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 - الصفحة غير موجودة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --primary: #1976d2;
+      --primary-light: #42a5f5;
+      --primary-dark: #1565c0;
+      --secondary: #9c27b0;
+      --bg: #f5f5f5;
+      --surface: #ffffff;
+      --text-primary: rgba(0, 0, 0, 0.87);
+      --text-secondary: rgba(0, 0, 0, 0.6);
+      --divider: rgba(0, 0, 0, 0.12);
+      --shadow-1: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+      --shadow-4: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+      --shadow-8: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+      --radius: 4px;
+      --radius-lg: 8px;
+    }
+
+    body {
+      font-family: 'Cairo', 'Roboto', sans-serif;
+      background-color: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* AppBar */
+    .appbar {
+      background: var(--primary);
+      color: white;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+      position: sticky;
+      top: 0;
+      z-index: 1100;
+    }
+
+    .appbar-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: 0.0075em;
+    }
+
+    .menu-icon {
+      width: 24px;
+      height: 24px;
+      margin-left: 16px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      justify-content: center;
+    }
+
+    .menu-icon span {
+      display: block;
+      height: 2px;
+      background: white;
+      border-radius: 2px;
+    }
+
+    /* Main Content */
+    .main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+    }
+
+    /* Paper Card */
+    .paper {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-8);
+      padding: 64px 48px;
+      max-width: 560px;
+      width: 100%;
+      text-align: center;
+      animation: fadeInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Illustration */
+    .illustration {
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 32px;
+      position: relative;
+    }
+
+    .illustration svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* 404 Number */
+    .error-code {
+      font-size: 6rem;
+      font-weight: 700;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 8px;
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.85;
+      }
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: var(--divider);
+      margin: 24px 0;
+    }
+
+    /* Typography */
+    .heading {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      letter-spacing: 0.0075em;
+    }
+
+    .subtext {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 32px;
+    }
+
+    /* Buttons */
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 22px;
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 0.9375rem;
+      font-weight: 600;
+      letter-spacing: 0.02857em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: none;
+      outline: none;
+      transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
+        box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1),
+        transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+      min-width: 64px;
+      height: 42px;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: currentColor;
+      opacity: 0;
+      transition: opacity 200ms;
+    }
+
+    .btn:hover::after {
+      opacity: 0.08;
+    }
+
+    .btn:active::after {
+      opacity: 0.16;
+    }
+
+    .btn-contained {
+      background: var(--primary);
+      color: white;
+      box-shadow: var(--shadow-1);
+    }
+
+    .btn-contained:hover {
+      background: var(--primary-dark);
+      box-shadow: var(--shadow-4);
+    }
+
+    .btn-outlined {
+      background: transparent;
+      color: var(--primary);
+      border: 1px solid rgba(25, 118, 210, 0.5);
+    }
+
+    .btn-outlined:hover {
+      border-color: var(--primary);
+      background: rgba(25, 118, 210, 0.04);
+    }
+
+    /* Chip */
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      background: rgba(25, 118, 210, 0.08);
+      color: var(--primary);
+      border-radius: 16px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .chip-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--primary);
+      border-radius: 50%;
+      animation: blink 1.5s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.3;
+      }
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 16px;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- AppBar -->
+  <header class="appbar">
+    <div class="menu-icon">
+      <span></span><span></span><span></span>
+    </div>
+    <span class="appbar-title">تطبيقي</span>
+  </header>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="paper">
+
+      <!-- Illustration SVG -->
+      <div class="illustration">
+        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Background circle -->
+          <circle cx="100" cy="100" r="90" fill="rgba(25,118,210,0.06)" stroke="rgba(25,118,210,0.15)"
+            stroke-width="2" />
+          <!-- Broken page icon -->
+          <rect x="55" y="40" width="90" height="110" rx="6" fill="white" stroke="#e0e0e0" stroke-width="1.5" />
+          <!-- Page lines -->
+          <line x1="70" y1="65" x2="130" y2="65" stroke="#bdbdbd" stroke-width="2.5" stroke-linecap="round" />
+          <line x1="70" y1="80" x2="120" y2="80" stroke="#bdbdbd" stroke-width="2.5" stroke-linecap="round" />
+          <line x1="70" y1="95" x2="110" y2="95" stroke="#bdbdbd" stroke-width="2.5" stroke-linecap="round" />
+          <!-- Broken X mark -->
+          <circle cx="100" cy="130" r="22" fill="rgba(25,118,210,0.08)" />
+          <line x1="89" y1="119" x2="111" y2="141" stroke="#1976d2" stroke-width="3" stroke-linecap="round" />
+          <line x1="111" y1="119" x2="89" y2="141" stroke="#1976d2" stroke-width="3" stroke-linecap="round" />
+          <!-- Question marks decorative -->
+          <text x="28" y="60" font-size="22" fill="rgba(156,39,176,0.25)" font-family="Cairo, sans-serif"
+            font-weight="bold">؟</text>
+          <text x="155" y="155" font-size="18" fill="rgba(25,118,210,0.2)" font-family="Cairo, sans-serif"
+            font-weight="bold">؟</text>
+          <text x="148" y="58" font-size="14" fill="rgba(156,39,176,0.2)" font-family="Cairo, sans-serif"
+            font-weight="bold">؟</text>
+        </svg>
+      </div>
+
+      <!-- Chip -->
+      <div class="chip">
+        <span class="chip-dot"></span>
+        خطأ في الصفحة
+      </div>
+
+      <!-- Error Code -->
+      <div class="error-code">404</div>
+
+      <div class="divider"></div>
+
+      <!-- Text -->
+      <h1 class="heading">الصفحة غير موجودة</h1>
+      <p class="subtext">
+        يبدو أن الصفحة التي تبحث عنها غير موجودة أو ربما تم نقلها أو حذفها.
+        تأكد من صحة الرابط أو عد إلى الصفحة الرئيسية.
+      </p>
+
+      <!-- Buttons -->
+      <div class="btn-group">
+        <button class="btn btn-contained" onclick="history.back()">
+          ← رجوع
+        </button>
+        <button class="btn btn-outlined" onclick="location.href='/'">
+          🏠 الرئيسية
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2024 تطبيقي — جميع الحقوق محفوظة
+  </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+import { useEffect, useState } from "react";
+
+// مثال: جاي من auth context
+// const { user } = useAuth();
+// user.role => "admin" | "manager" | "client"
+
+const roleAccessMap = {
+  admin: {
+    createUser: true,
+    manageUsers: true,
+    viewAccount: true,
+    logout: true,
+  },
+  manager: {
+    createUser: true,
+    manageUsers: true,
+    viewAccount: true,
+    logout: true,
+  },
+  client: {
+    createUser: false,
+    manageUsers: false,
+    viewAccount: true,
+    logout: true,
+  },
+};
+
+function Navbar() {
+  const [access, setAccess] = useState({
+    createUser: false,
+    manageUsers: false,
+    viewAccount: false,
+    logout: false,
+  });
+
+  useEffect(() => {
+    const role = user?.role?.toLowerCase();
+    setAccess(roleAccessMap[role] || roleAccessMap.client); // fallback
+  }, [user?.role]);
+
+  const settings = [
+    { id: 1, label: "انشاء مستخدم", path: "/dashboard/create", visible: access.createUser },
+    { id: 2, label: "اداره مستخدم", path: "/dashboard/UsersManager", visible: access.manageUsers },
+    { id: 3, label: "حسابي", path: "/dashboard/MyAccount", visible: access.viewAccount },
+    { id: 8, label: "Logout", onClick: () => setopen(true), visible: access.logout },
+  ];
+
+  return (
+    <>
+      {settings
+        .filter((item) => item.visible)
+        .map((setting) => (
+          <MenuItem key={setting.id} onClick={handleCloseUserMenu}>
+            <Button
+              {...(setting.path ? { component: Link, to: setting.path } : {})}
+              onClick={setting.onClick}
+            >
+              {setting.label}
+            </Button>
+          </MenuItem>
+        ))}
+    </>
+  );
+}

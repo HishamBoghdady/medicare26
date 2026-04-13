@@ -1,0 +1,105 @@
+<mxfile host="app.diagrams.net" modified="2026-02-17T00:00:00.000Z" agent="Codex" version="24.7.17" editor="diagramly">
+  <diagram id="healthtec-arch" name="HealthTec Architecture">
+    <mxGraphModel dx="1460" dy="906" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1080" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="HealthTec-V2 Frontend Architecture (React + Vite)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=22;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="680" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="entry" value="Entry\nsrc/main.jsx\ncreateRoot + StrictMode" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="40" y="100" width="220" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="appProviders" value="AppProviders\nsrc/context/Provider.jsx\nAuthProvider > ThemeProvider > PatientsProvider" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="300" y="100" width="320" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="app" value="App\nsrc/App.jsx\n(UI / Routes host)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="660" y="100" width="220" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="authProvider" value="AuthProvider\nsrc/context/auth/authProvider.jsx\nstate: user, loading\nmethods: login/register/logout" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="220" y="250" width="250" height="110" as="geometry" />
+        </mxCell>
+
+        <mxCell id="themeProvider" value="ThemeProvider\nsrc/context/ThemeMode/ThemeProvider.jsx\nstate: darkMode\nMUI Theme + CssBaseline" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="500" y="250" width="250" height="110" as="geometry" />
+        </mxCell>
+
+        <mxCell id="patientsProvider" value="PatientsProvider\nsrc/context/Patient/PatientProvider.jsx\nstate: patient[], loading\nCRUD + exit/addPayment/addSession" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="780" y="250" width="290" height="110" as="geometry" />
+        </mxCell>
+
+        <mxCell id="guards" value="Guards Layer\nsrc/guards/protectroute.jsx\nsrc/guards/usePermission.js\nsrc/guards/permissions.js" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="1140" y="100" width="260" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="authContext" value="AuthContext + useAuth\nsrc/context/auth/AuthContext.js\nsrc/context/auth/useAuth.js" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="220" y="410" width="250" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="themeContext" value="ThemeContext + useTheme\nsrc/context/ThemeMode/ThemeContext.js\nsrc/context/ThemeMode/useTheme.js" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="500" y="410" width="250" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="patientContext" value="PatientContext + usePatient\nsrc/context/Patient/PatientContext.js\nsrc/context/Patient/usePatient.js" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="780" y="410" width="290" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="authServices" value="Auth Services\nsrc/services/authServices.js\nsignUp/signIn/signOut\nobserveAuthState/getUserProfile/updateUserProfile" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d4e1f5;strokeColor=#6c8ebf;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="200" y="560" width="300" height="120" as="geometry" />
+        </mxCell>
+
+        <mxCell id="patientServices" value="Patient Services\nsrc/services/PatientServices.js\nadd/get/update/delete patient docs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d4e1f5;strokeColor=#6c8ebf;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="560" y="560" width="280" height="120" as="geometry" />
+        </mxCell>
+
+        <mxCell id="utils" value="Business Utilities\nsrc/utils/index.js + src/utils/functions/*\nCalcDate / CalcOwed / CalcMoney / CalcSession / normalizeDateSafe" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d4e1f5;strokeColor=#6c8ebf;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="880" y="560" width="330" height="120" as="geometry" />
+        </mxCell>
+
+        <mxCell id="firebaseConfig" value="Firebase Config\nsrc/firebase/firebase.config.js\ninitializeApp + getAuth + getFirestore" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="260" y="740" width="260" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="firebaseAuth" value="Firebase Auth" style="shape=cloud;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="560" y="740" width="170" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="firestore" value="Cloud Firestore\nusers / patients / patientsDB" style="shape=cloud;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="760" y="740" width="220" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="note" value="Note from current code:\n1) Provider imports authProvider with lowercase filename.\n2) usePermission/protectroute import useAuth from AuthContext path.\n3) usePatient imports PatientsContext while file is PatientContext.js." style="shape=note;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="1140" y="310" width="360" height="170" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e1" style="endArrow=block;html=1;rounded=0;strokeWidth=2" edge="1" parent="1" source="entry" target="appProviders"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2" style="endArrow=block;html=1;rounded=0;strokeWidth=2" edge="1" parent="1" source="appProviders" target="app"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3" style="endArrow=block;html=1;rounded=0" edge="1" parent="1" source="appProviders" target="authProvider"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e4" style="endArrow=block;html=1;rounded=0" edge="1" parent="1" source="appProviders" target="themeProvider"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e5" style="endArrow=block;html=1;rounded=0" edge="1" parent="1" source="appProviders" target="patientsProvider"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="e6" style="endArrow=block;html=1;rounded=0" edge="1" parent="1" source="authProvider" target="authContext"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e7" style="endArrow=block;html=1;rounded=0" edge="1" parent="1" source="themeProvider" target="themeContext"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e8" style="endArrow=block;html=1;rounded=0" edge="1" parent="1" source="patientsProvider" target="patientContext"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="e9" value="auth state + profile" style="endArrow=block;html=1;rounded=0;dashed=1" edge="1" parent="1" source="authProvider" target="authServices"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e10" value="patient CRUD" style="endArrow=block;html=1;rounded=0;dashed=1" edge="1" parent="1" source="patientsProvider" target="patientServices"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e11" value="financial/session calculations" style="endArrow=block;html=1;rounded=0;dashed=1" edge="1" parent="1" source="patientsProvider" target="utils"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="e12" style="endArrow=block;html=1;rounded=0" edge="1" parent="1" source="authServices" target="firebaseConfig"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e13" style="endArrow=block;html=1;rounded=0" edge="1" parent="1" source="patientServices" target="firebaseConfig"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e14" style="endArrow=block;html=1;rounded=0" edge="1" parent="1" source="firebaseConfig" target="firebaseAuth"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e15" style="endArrow=block;html=1;rounded=0" edge="1" parent="1" source="firebaseConfig" target="firestore"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="e16" value="route checks" style="endArrow=block;html=1;rounded=0" edge="1" parent="1" source="app" target="guards"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e17" value="reads user.role" style="endArrow=block;html=1;rounded=0" edge="1" parent="1" source="guards" target="authContext"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
