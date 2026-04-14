@@ -1,5 +1,5 @@
 // Hooks from React
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 //components/layout
 import MainLayout from "./components/layout/MainLayout";
 //components/shared
@@ -32,7 +32,8 @@ function App() {
         <Route path="/" element={<IntroPage />} />
         <Route path="*" element={<Error />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/Unauthorized" element={<Unauthorized />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
+        <Route path="/Unauthorized" element={<Navigate to="/unauthorized" replace />} />
 
         <Route path="/dashboard" element={<MainLayout />}>
           <Route index element={<Intro />} />
