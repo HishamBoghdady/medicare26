@@ -95,7 +95,7 @@ function Navbar() {
 
           {/* Start Desktop View */}
           {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-          <Box component="img" src={"./Elmanar.jpg"} alt="Logo"
+          <Box component="img" src={'./Elmanar.jpg'} alt="Logo"
             sx={{ display: { xs: 'none', md: 'flex', width: '50px', borderRadius: '50%' }, mr: 1 }} />
           <Typography variant="h6" noWrap component="a"
             sx={{
