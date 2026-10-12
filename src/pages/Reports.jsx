@@ -12,8 +12,11 @@ import { FilterDialog, ControlDialog, EditDialog, InfoDialog, ExitDialog, DellDi
 import normalizeDateSafe from '../utils/functions/normalizeDateSafe';
 import { CalcDate, CalcOwed } from '../utils/index';
 import useTheme from "../context/ThemeMode/useTheme";
+//***** */
+import DataCard from "../components/test/Card";
+//***** */
 function Reports() {
-  const {darkMode}=useTheme()
+  const { darkMode } = useTheme()
   const { patient, /**setPatient */ refreshPatients } = usePatient();
   //Controll Dialog=> start './Reports/ControlDialog'
   const [openControllDialog, setOpenControllDialog] = useState(false);
@@ -204,10 +207,6 @@ function Reports() {
           ExitData: exit ? exit : "is here",
           Name: e.PersonalData.Name,
           Address: e.PersonalData.Address,
-
-          // NumberDays: e.FinancialData.NumberDays,
-          // AmountPaid: e.FinancialData.AmountPaid,
-          // AmountOwed: e.FinancialData.AmountOwed,
           NumberDays: days,
           AmountPaid: paid,
           AmountOwed: owed,
@@ -218,8 +217,10 @@ function Reports() {
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filteredPatients, todayTick]);
-
-
+  const totalPaid = flatData.reduce((sum, r) => sum + (r.AmountPaid || 0), 0);
+  const totalOwed = flatData.reduce((sum, r) => sum + (r.AmountOwed || 0), 0);
+  const Incenter = flatData.filter((n) => n.Condition == "in").length;
+  const Outcenter = flatData.filter((n) => n.Condition == "out").length;
   //--------------------------------------------Columns--------------------------------------------//
   const columns = [
     { field: 'Num', headerName: 'م', width: 50 },
@@ -258,7 +259,6 @@ function Reports() {
             <FilterDialog onChange={handleFilterChange} width={180} />
 
           </Box>
-
           <Button size='small'
             sx={{
               bgcolor: "#2e7d32", color: "#fff", borderRadius: "30%", p: 1.3, minWidth: "48px",
@@ -266,6 +266,10 @@ function Reports() {
             }} onClick={refreshPatients}>
             <UpdateIcon fontSize="medium" />
           </Button>
+        </Stack>
+
+        <Stack direction="row" spacing={2} gap={2} sx={{ margin: '10px 0' }}>
+          <DataCard totalPaid={totalPaid} totalOwed={totalOwed} Incenter={Incenter} Outcenter={Outcenter} />
         </Stack>
 
         {/*  Datatable  */}
@@ -294,7 +298,7 @@ function Reports() {
             // 
             '& .GR-min': {
               // backgroundColor: '#00000070 !important',
-              color:  darkMode ? '#ffffff !important' : '#000 !important',
+              color: darkMode ? '#ffffff !important' : '#000 !important',
             },
 
             '& .YW-normal': {
