@@ -14,6 +14,9 @@ import { CalcDate, CalcOwed } from '../utils/index';
 import useTheme from "../context/ThemeMode/useTheme";
 //***** */
 import DataCard from "../components/test/Card";
+import { InputAdornment, Tooltip, } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
+
 //***** */
 function Reports() {
   const { darkMode } = useTheme()
@@ -248,25 +251,71 @@ function Reports() {
   return (
     <>
       <Box sx={{ width: "100%", mb: 2 }}>
-        <Stack direction="row" spacing={2} gap={2} sx={{ margin: '10px 0' }}>
 
-          <TextField label="🔍 بحث" fullWidth variant="outlined" sx={{ mb: 2, direction: 'rtl' }}
-            value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} size='small' />
+        <Stack
+          direction={{ xs: "column", sm: "row" }}
+          spacing={1.5}
+          sx={{ width: "100%", my: 2, alignItems: { xs: "stretch", sm: "center" }, }} >
 
-          <Box sx={{ display: "flex", gap: 1, alignItems: "center", flexDirection: 'column' }}>
-
-            {/* Select */}
-            <FilterDialog onChange={handleFilterChange} width={180} />
-
-          </Box>
-          <Button size='small'
+          {/* Search */}
+          <TextField
+            placeholder="ابحث بالاسم أو العنوان..."
+            fullWidth
+            variant="outlined"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            size="small"
+            slotProps={{
+              input: {
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon color="action" />
+                  </InputAdornment>
+                ),
+              },
+            }}
             sx={{
-              bgcolor: "#2e7d32", color: "#fff", borderRadius: "30%", p: 1.3, minWidth: "48px",
-              "&:hover": { bgcolor: "#1b5e20", transform: "scale(1.05)", transition: "all 0.2s ease", },
-            }} onClick={refreshPatients}>
-            <UpdateIcon fontSize="medium" />
-          </Button>
+              flex: 1, minWidth: 0,
+              "& .MuiOutlinedInput-root": {
+                borderRadius: 3, bgcolor: "background.paper", transition: "0.2s",
+                "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "primary.main", },
+                "&.Mui-focused": { boxShadow: (theme) => `0 0 0 3px ${theme.palette.primary.main}20`, },
+              },
+              "& .MuiInputBase-input": { textAlign: "right", },
+            }}
+          />
+
+          {/* Filters */}
+          <Box sx={{ flexShrink: 0, "& > *": { width: { xs: "100%", sm: 180 }, }, }}>
+            <FilterDialog onChange={handleFilterChange} width={180} />
+          </Box>
+
+          {/* Refresh */}
+          <Tooltip title="تحديث بيانات المرضى">
+            <IconButton
+              onClick={refreshPatients}
+              aria-label="تحديث بيانات المرضى"
+              sx={{
+                alignSelf: { xs: "flex-end", sm: "center" },
+                width: 42,
+                height: 42,
+                flexShrink: 0,
+                borderRadius: 3,
+                bgcolor: "primary.main",
+                color: "#fff",
+                boxShadow: 1,
+                transition: "all 0.2s ease",
+                "&:hover": {
+                  bgcolor: "primary.dark",
+                  transform: "rotate(30deg)",
+                },
+              }}
+            >
+              <UpdateIcon />
+            </IconButton>
+          </Tooltip>
         </Stack>
+
 
         <Stack direction="row" spacing={2} gap={2} sx={{ margin: '10px 0' }}>
           <DataCard totalPaid={totalPaid} totalOwed={totalOwed} Incenter={Incenter} Outcenter={Outcenter} />

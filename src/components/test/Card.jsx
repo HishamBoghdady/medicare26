@@ -1,4 +1,3 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -35,15 +34,11 @@ function DataCard({ totalPaid, totalOwed, Incenter, Outcenter }) {
     ]
     return (
         <Box
-            sx={{
-                width: "100%",
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(min(200px, 100%), 1fr))",
-                gap: 2,
-            }}
+            sx={{ width: "100%", display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(200px, 100%), 1fr))", gap: 2, }}
+        // sx={{width: "100%",display: "grid",gridTemplateColumns: {xs: "1fr",sm: "repeat(4, minmax(0, 1fr))",},gap: 2,}}
         >
             {cards.map((card) => (
-                <Card key={card.id} >
+                <Card key={card.id} sx={{ width: '100%' }}>
                     <CardActionArea
                         sx={{
                             border: `0.5px solid ${card.color}`,
@@ -54,8 +49,18 @@ function DataCard({ totalPaid, totalOwed, Incenter, Outcenter }) {
                             },
                         }}>
 
-                        <CardContent sx={{ height: "100%" }}>
-                            <Typography variant="h5" component="div">{card.title}</Typography>
+                        <CardContent
+                            sx={{ height: "100%", display: "grid", }}
+                        // sx={{
+                        //     height: "100%",
+                        //     display: "flex",
+                        //     justifyContent: "space-between",
+                        //     alignItems: "center",
+                        //     gap: 2,
+                        //     textAlign: "left"
+                        // }}
+                        >
+                            <Typography variant="h5" component="div" >{card.title}</Typography>
                             <Typography variant="h4" sx={{ color: card.color }}>{card.salary}</Typography>
                         </CardContent>
                     </CardActionArea>

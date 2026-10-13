@@ -1,4 +1,4 @@
-import { useState ,useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import useTheme from '../../context/ThemeMode/useTheme';
 //Import MUI Library
@@ -7,7 +7,7 @@ import { pink } from '@mui/material/colors';
 import { Box, Menu, AppBar, Avatar, Button, Toolbar, Tooltip, MenuItem, Container, IconButton, Typography } from "../Lib/MuiComponents"
 import {
   MenuIcon, LogoutIcon, Brightness4, Brightness7, SettingsIcon, CoPresentIcon,
-  SummarizeIcon,  AccountBoxIcon, PersonAddAltIcon, AccountCircleIcon,
+  SummarizeIcon, AccountBoxIcon, PersonAddAltIcon, AccountCircleIcon,
   AccountBalanceWalletIcon, AdminPanelSettingsIcon, GroupAddIcon
 } from "../Lib/MuiIcon"
 import AlertDialog from './DialogExit';
@@ -36,7 +36,7 @@ function Navbar() {
   const [open, setopen] = useState(false)
   const navigate = useNavigate();
 
-  const {user,logout}=useAuth()
+  const { user, logout } = useAuth()
   const [access, setAccess] = useState({
     createUser: false,
     manageUsers: false,
@@ -63,10 +63,10 @@ function Navbar() {
   // const {logout}=useUser()
 
   const settings = [
-    { id: 1, label: "Create User", path: "/dashboard/create", icon: <GroupAddIcon />,  visible: access.createUser},
-    { id: 2, label: "Mangements Users", path: '/dashboard/UsersManager', icon: <AdminPanelSettingsIcon /> , visible: access.manageUsers},
-    { id: 3, label: "MyAccount", path: '/dashboard/MyAccount', icon: <AccountBoxIcon /> , visible: access.viewAccount},
-    { id: 4, label: 'Logout', /**path: '/?', */ icon: <LogoutIcon />, onClick: () => setopen(true) , visible: access.logout},
+    { id: 1, label: "Create User", path: "/dashboard/create", icon: <GroupAddIcon />, visible: access.createUser },
+    { id: 2, label: "Mangements Users", path: '/dashboard/UsersManager', icon: <AdminPanelSettingsIcon />, visible: access.manageUsers },
+    { id: 3, label: "MyAccount", path: '/dashboard/MyAccount', icon: <AccountBoxIcon />, visible: access.viewAccount },
+    { id: 4, label: 'Logout', /**path: '/?', */ icon: <LogoutIcon />, onClick: () => setopen(true), visible: access.logout },
   ]
   const pages = [
     { id: 1, label: "تسجيل حاله", path: "/dashboard/newpatient", icon: <PersonAddAltIcon /> },
@@ -82,20 +82,20 @@ function Navbar() {
             open={open}
             onClose={() => setopen(false)}
             onConfirm={async () => {
-  try {
-    setopen(false);
-    await logout();
-    navigate('/');
-  } catch (e) {
-    console.error("Logout failed:", e);
-  }
-}}
+              try {
+                setopen(false);
+                await logout();
+                navigate('/');
+              } catch (e) {
+                console.error("Logout failed:", e);
+              }
+            }}
 
           />
 
           {/* Start Desktop View */}
           {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-          <Box component="img" src={'./Elmanar.jpg'} alt="Logo"
+          <Box component="img" src={'../../public/Elmanar.jpg'} alt="Logo"
             sx={{ display: { xs: 'none', md: 'flex', width: '50px', borderRadius: '50%' }, mr: 1 }} />
           <Typography variant="h6" noWrap component="a"
             sx={{
@@ -203,26 +203,26 @@ function Navbar() {
               transformOrigin={{ vertical: 'top', horizontal: 'right', }}>
 
               {settings
-              .filter((item) => item.visible)
-              .map((setting) => (
-                <MenuItem key={setting.id} onClick={() => {
-                  handleCloseUserMenu()
-                  setting.onClick?.()
-                }}>
+                .filter((item) => item.visible)
+                .map((setting) => (
+                  <MenuItem key={setting.id} onClick={() => {
+                    handleCloseUserMenu()
+                    setting.onClick?.()
+                  }}>
 
-                  <Button
-                    key={setting.path}
-                    component={Link}
-                    to={setting.path}
-                    color="inherit"
-                    sx={{ fontSize: "16px" }}
-                    startIcon={setting.icon}
-                    onClick={setting?.func}
-                  >
-                    {setting.label}
-                  </Button>
-                </MenuItem>
-              ))}
+                    <Button
+                      key={setting.path}
+                      component={Link}
+                      to={setting.path}
+                      color="inherit"
+                      sx={{ fontSize: "16px" }}
+                      startIcon={setting.icon}
+                      onClick={setting?.func}
+                    >
+                      {setting.label}
+                    </Button>
+                  </MenuItem>
+                ))}
             </Menu>
           </Box>
           {/* End Setting View */}

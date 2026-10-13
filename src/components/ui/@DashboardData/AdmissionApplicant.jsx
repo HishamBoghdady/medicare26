@@ -1,7 +1,7 @@
-import {memo} from "react"
+import { memo } from "react"
 
-import {Box,Paper,MenuItem,TextField,Typography} from "../../Lib/MuiComponents"
-const AdmissionApplicant = memo(function ({ PaperStyle, TypographyStyle, DividerStyle, GridStyle,data,onChange}) {
+import { Box, Paper, MenuItem, TextField, Typography } from "../../Lib/MuiComponents"
+const AdmissionApplicant = memo(function ({ PaperStyle, TypographyStyle, DividerStyle, GridStyle, data, onChange }) {
 
     return (
         <Paper elevation={0} sx={PaperStyle}>
