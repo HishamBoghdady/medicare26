@@ -15,13 +15,16 @@ import Money from "./pages/Money";
 import Reports from "./pages/Reports";
 import Sessions from "./pages/Sessions";
 
+
 import Unauthorized from "./components/shared/Unauthorized";
 
 import CreatePage from "./components/ui/@User/CreateUser";
 import UsersManager from "./components/ui/@User/UserManger";
 import MyAccount from "./components/ui/@User/MyAccount";
+import MangeData from "./components/ui/@User/MangeData";
 
 import ProtectedRoute from "./guards/protectroute";
+
 function App() {
 
   console.log("App Rendered");
@@ -39,7 +42,7 @@ function App() {
           <Route index element={<Intro />} />
           <Route path='newpatient' element={<DashboardData />} />
 
-            <Route path='session' element={<Sessions />} />
+          <Route path='session' element={<Sessions />} />
           {/* <Route path="session" element={
                 <ProtectedRoute roles={["manager"]}>
                   <Sessions />
@@ -53,7 +56,8 @@ function App() {
 
           <Route path='create' element={<CreatePage />} />
           <Route path='UsersManager' element={<UsersManager />} />
-          <Route path="MyAccount" element={<MyAccount/>}/>
+          <Route path="MyAccount" element={<MyAccount />} />
+          <Route path="MangeData" element={<MangeData />} />
         </Route>
       </Routes>
     </>

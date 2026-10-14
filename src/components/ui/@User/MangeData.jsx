@@ -21,11 +21,10 @@ import {
     readJsonFile,
     validatePatientBackup,
 } from "../../../utils/patient/patientJson.new";
-const PatientJsonManager = ({
-    patients,
-    onPrepareImport,
-    onImport,
-}) => {
+import usePatients from "../../../context/Patient/usePatient";
+const MangeData = () => {
+
+    const { patient, preparePatientImport, importPatients } = usePatients();
     const fileInputRef = useRef(null);
 
     const [error, setError] = useState("");
@@ -41,7 +40,7 @@ const PatientJsonManager = ({
     //
     const handlePrepareImport = async (backup) => {
         try {
-            const plan = await onPrepareImport(backup.patients);
+            const plan = await preparePatientImport(backup.patients);
 
             setPreviewData(backup);
             setImportPlan(plan);
@@ -58,7 +57,7 @@ const PatientJsonManager = ({
     //
     const handleExport = () => {
         try {
-            const backup = createPatientBackup(patients);
+            const backup = createPatientBackup(patient);
 
             downloadJsonFile(
                 backup,
@@ -109,7 +108,7 @@ const PatientJsonManager = ({
         setImportResult(null);
 
         try {
-            const result = await onImport({
+            const result = await importPatients({
                 newPatients: importPlan.newPatients,
                 conflicts: importPlan.conflicts,
                 decisions,
@@ -301,4 +300,4 @@ const PatientJsonManager = ({
     );
 };
 
-export default PatientJsonManager;
+export default MangeData;
