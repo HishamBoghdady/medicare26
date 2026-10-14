@@ -17,18 +17,21 @@ const roleAccessMap = {
     createUser: true,
     manageUsers: true,
     viewAccount: true,
+    MangeData: true,
     logout: true,
   },
   manager: {
     createUser: false,
     manageUsers: false,
     viewAccount: true,
+    MangeData: false,
     logout: true,
   },
   client: {
     createUser: false,
     manageUsers: false,
     viewAccount: false,
+    MangeData: false,
     logout: true,
   },
 };
@@ -41,6 +44,7 @@ function Navbar() {
     createUser: false,
     manageUsers: false,
     viewAccount: false,
+    MangeData: false,
     logout: false,
   });
 
@@ -66,7 +70,8 @@ function Navbar() {
     { id: 1, label: "Create User", path: "/dashboard/create", icon: <GroupAddIcon />, visible: access.createUser },
     { id: 2, label: "Mangements Users", path: '/dashboard/UsersManager', icon: <AdminPanelSettingsIcon />, visible: access.manageUsers },
     { id: 3, label: "MyAccount", path: '/dashboard/MyAccount', icon: <AccountBoxIcon />, visible: access.viewAccount },
-    { id: 4, label: 'Logout', /**path: '/?', */ icon: <LogoutIcon />, onClick: () => setopen(true), visible: access.logout },
+    { id: 4, label: "MangeData", path: '/dashboard/MangeData', icon: <AccountBoxIcon />, visible: access.MangeData },
+    { id: 5, label: 'Logout', /**path: '/?', */ icon: <LogoutIcon />, onClick: () => setopen(true), visible: access.logout },
   ]
   const pages = [
     { id: 1, label: "تسجيل حاله", path: "/dashboard/newpatient", icon: <PersonAddAltIcon /> },
