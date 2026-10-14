@@ -7,13 +7,13 @@ import { useState, useMemo, useEffect } from "react";
 //Import Context Data
 import usePatient from '../context/Patient/usePatient';
 //Components
-import { FilterDialog, ControlDialog, EditDialog, InfoDialog, ExitDialog, DellDialog } from "../components/ui/@Reports/Index"
+import { FilterDialog, ControlDialog, EditDialog, InfoDialog, ExitDialog, DellDialog, CardData } from "../components/ui/@Reports/Index"
 //****************//
 import normalizeDateSafe from '../utils/functions/normalizeDateSafe';
 import { CalcDate, CalcOwed } from '../utils/index';
 import useTheme from "../context/ThemeMode/useTheme";
 //***** */
-import DataCard from "../components/test/Card";
+
 import { InputAdornment, Tooltip, } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
@@ -318,7 +318,7 @@ function Reports() {
 
 
         <Stack direction="row" spacing={2} gap={2} sx={{ margin: '10px 0' }}>
-          <DataCard totalPaid={totalPaid} totalOwed={totalOwed} Incenter={Incenter} Outcenter={Outcenter} />
+          <CardData totalPaid={totalPaid} totalOwed={totalOwed} Incenter={Incenter} Outcenter={Outcenter} />
         </Stack>
 
         {/*  Datatable  */}
