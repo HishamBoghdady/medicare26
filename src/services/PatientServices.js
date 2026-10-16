@@ -155,4 +155,75 @@ const importPatientsWithDecisions = async (
     };
 };
 
-export { addAllPatient, getAllPatients, updateAllPatient, deleteAllPatient, preparePatientImport, importPatientsWithDecisions }
+/* ======================= BULK DELETE ======================= */
+const deletePatientsBatch = async (ids) => {
+    const uniqueIds = [...new Set(ids)];
+
+    if (uniqueIds.length === 0) {
+        return { deleted: 0 };
+    }
+
+    // Batch واحد حتى تنجح عمليات الحذف كلها أو تفشل كلها.
+    // نستخدم 450 كحد احترازي أقل من الحد الأقصى لـ Firestore.
+    if (uniqueIds.length > 450) {
+        throw new Error(
+            "لا يمكن حذف أكثر من 450 مريضًا في العملية الواحدة."
+        );
+    }
+
+    const batch = writeBatch(db);
+
+    for (const id of uniqueIds) {
+        batch.delete(doc(db, "patientsDB", id));
+    }
+
+    await batch.commit();
+
+    return { deleted: uniqueIds.length };
+};
+
+
+/* ======================= BULK UPDATE ======================= */
+const updatePatientsBatch = async (patients) => {
+    if (patients.length === 0) {
+        return { updated: 0 };
+    }
+
+    if (patients.length > 450) {
+        throw new Error(
+            "لا يمكن تحديث أكثر من 450 مريضًا في العملية الواحدة."
+        );
+    }
+
+    const ids = patients.map((patient) => patient.id);
+
+    if (new Set(ids).size !== ids.length) {
+        throw new Error("توجد معرّفات مرضى مكررة.");
+    }
+
+    const batch = writeBatch(db);
+
+    for (const patient of patients) {
+        const { id, ...data } = patient;
+
+        batch.update(
+            doc(db, "patientsDB", id),
+            data
+        );
+    }
+
+    await batch.commit();
+
+    return { updated: patients.length };
+};
+
+export {
+    addAllPatient,
+    getAllPatients,
+    updateAllPatient,
+    deleteAllPatient,
+    preparePatientImport,
+    importPatientsWithDecisions,
+    deletePatientsBatch,
+    updatePatientsBatch
+}

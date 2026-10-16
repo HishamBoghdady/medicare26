@@ -1,0 +1,2 @@
+ثم احذف تعريف roleAccessMap كاملًا، واحذف أيضًا useState الخاص بـ access وuseEffect الذي يحدّثه.
+بدلًا منهما، داخل Navbar استخدم:

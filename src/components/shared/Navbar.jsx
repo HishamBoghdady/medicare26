@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState/*, useEffect*/ } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import useTheme from '../../context/ThemeMode/useTheme';
 //Import MUI Library
@@ -12,47 +12,74 @@ import {
 } from "../Lib/MuiIcon"
 import AlertDialog from './DialogExit';
 import useAuth from "../../context/auth/useAuth"
-const roleAccessMap = {
-  admin: {
-    createUser: true,
-    manageUsers: true,
-    viewAccount: true,
-    MangeData: true,
-    logout: true,
-  },
-  manager: {
-    createUser: false,
-    manageUsers: false,
-    viewAccount: true,
-    MangeData: false,
-    logout: true,
-  },
-  client: {
-    createUser: false,
-    manageUsers: false,
-    viewAccount: false,
-    MangeData: false,
-    logout: true,
-  },
-};
+
+import { getRoleAccess } from "../../config/rolePermissions";
+// const roleAccessMap = {
+//   admin: {
+//     /* Setting */
+//     createUser: true,
+//     manageUsers: true,
+//     viewAccount: true,
+//     MangeData: true,
+//     logout: true,
+//     /* Pages */
+//     newpatient: true,
+//     session: true,
+//     money: true,
+//     searsh: true,
+//   },
+//   manager: {
+//     /* Setting */
+//     createUser: false,
+//     manageUsers: false,
+//     viewAccount: true,
+//     MangeData: false,
+//     logout: true,
+//     /* Pages */
+//     newpatient: true,
+//     session: true,
+//     money: true,
+//     searsh: true,
+//   },
+//   client: {
+//     /* Setting */
+//     createUser: false,
+//     manageUsers: false,
+//     viewAccount: false,
+//     MangeData: false,
+//     logout: true,
+//     /* Pages */
+//     newpatient: false,
+//     session: false,
+//     money: false,
+//     searsh: true,
+//   },
+// };
 function Navbar() {
   const [open, setopen] = useState(false)
   const navigate = useNavigate();
 
-  const { user, logout } = useAuth()
-  const [access, setAccess] = useState({
-    createUser: false,
-    manageUsers: false,
-    viewAccount: false,
-    MangeData: false,
-    logout: false,
-  });
+  // const { user, logout } = useAuth()
+  const { user, logout } = useAuth();
 
-  useEffect(() => {
-    const role = user?.role?.toLowerCase();
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setAccess(roleAccessMap[role] || roleAccessMap.client); // fallback
-  }, [user?.role]);
+  const access = getRoleAccess(user?.role);
+  // const [access, setAccess] = useState({
+  //   createUser: false,
+  //   manageUsers: false,
+  //   viewAccount: false,
+  //   MangeData: false,
+  //   logout: false,
+  //   newpatient: false,
+  //   session: false,
+  //   money: false,
+  //   searsh: false,
+  // });
+
+  // useEffect(() => {
+  //   const role = user?.role?.toLowerCase();
+  //   // eslint-disable-next-line react-hooks/set-state-in-effect
+  //   setAccess(roleAccessMap[role] || roleAccessMap.client); // fallback
+  // }, [user?.role]);
 
   const { darkMode, toggleDarkMode } = useTheme();
 
@@ -74,10 +101,10 @@ function Navbar() {
     { id: 5, label: 'Logout', /**path: '/?', */ icon: <LogoutIcon />, onClick: () => setopen(true), visible: access.logout },
   ]
   const pages = [
-    { id: 1, label: "تسجيل حاله", path: "/dashboard/newpatient", icon: <PersonAddAltIcon /> },
-    { id: 2, label: "جلسات", path: "/dashboard/session", icon: <CoPresentIcon /> },
-    { id: 3, label: "ماليات", path: "/dashboard/money", icon: <AccountBalanceWalletIcon /> },
-    { id: 4, label: "استعلامات", path: "/dashboard/searsh", icon: <SummarizeIcon /> },
+    { id: 1, label: "تسجيل حاله", path: "/dashboard/newpatient", icon: <PersonAddAltIcon />, visible: access.newpatient },
+    { id: 2, label: "جلسات", path: "/dashboard/session", icon: <CoPresentIcon />, visible: access.session },
+    { id: 3, label: "ماليات", path: "/dashboard/money", icon: <AccountBalanceWalletIcon />, visible: access.money },
+    { id: 4, label: "استعلامات", path: "/dashboard/searsh", icon: <SummarizeIcon />, visible: access.searsh },
   ];
   return (
     <AppBar position="static" sx={{ background: (theme) => theme.palette.navbarBg, transition: "0.3s ease", }}>
@@ -129,19 +156,21 @@ function Navbar() {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}>
 
-              {pages.map((item) => (
-                <MenuItem key={item.id} onClick={handleCloseNavMenu}>
-                  <Button
-                    key={item.path}
-                    component={Link}
-                    to={item.path}
-                    color="inherit"
-                    sx={{ fontSize: "16px" }}
-                    startIcon={item.icon}>
-                    {item.label}
-                  </Button>
-                </MenuItem>
-              ))}
+              {pages
+                .filter((item) => item.visible)
+                .map((item) => (
+                  <MenuItem key={item.id} onClick={handleCloseNavMenu}>
+                    <Button
+                      key={item.path}
+                      component={Link}
+                      to={item.path}
+                      color="inherit"
+                      sx={{ fontSize: "16px" }}
+                      startIcon={item.icon}>
+                      {item.label}
+                    </Button>
+                  </MenuItem>
+                ))}
 
             </Menu>
           </Box>
@@ -162,20 +191,22 @@ function Navbar() {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
 
-            {pages.map((item) => (
-              <MenuItem key={item.path} onClick={handleCloseNavMenu}>
-                <Button
-                  key={item.path}
-                  component={Link}
-                  to={item.path}
-                  color="inherit"
-                  sx={{ fontSize: "16px" }}
-                  startIcon={item.icon}
-                >
-                  {item.label}
-                </Button>
-              </MenuItem>
-            ))}
+            {pages
+              .filter((item) => item.visible)
+              .map((item) => (
+                <MenuItem key={item.path} onClick={handleCloseNavMenu}>
+                  <Button
+                    key={item.path}
+                    component={Link}
+                    to={item.path}
+                    color="inherit"
+                    sx={{ fontSize: "16px" }}
+                    startIcon={item.icon}
+                  >
+                    {item.label}
+                  </Button>
+                </MenuItem>
+              ))}
           </Box>
           {/* End Phone View */}
 

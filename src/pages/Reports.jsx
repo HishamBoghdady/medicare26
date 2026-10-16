@@ -1,5 +1,5 @@
 //Import MUI
-import { Box, Stack, Button, TextField, IconButton } from "../components/Lib/MuiComponents"
+import { Box, Stack, Button, TextField, IconButton, Typography, Dialog, DialogTitle, DialogContent, DialogActions } from "../components/Lib/MuiComponents"
 import { UpdateIcon, MoreVertIcon } from "../components/Lib/MuiIcon"
 import { DataGrid } from '@mui/x-data-grid';
 //Import Hooks
@@ -20,10 +20,29 @@ import YardIcon from '@mui/icons-material/Yard';
 
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import { getRoleAccess } from "../config/rolePermissions";
+import useAuth from "../context/auth/useAuth"
+
 //***** */
 function Reports() {
+  const { user } = useAuth();
+
+  const access = getRoleAccess(user?.role);
+  /**select */
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [bulkAction, setBulkAction] = useState(null);
+  const [bulkBusy, setBulkBusy] = useState(false);
+  const [bulkError, setBulkError] = useState("");
+  const [bulkExitTime, setBulkExitTime] = useState(() => {
+    const today = new Date();
+    return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+  });
+  const [bulkExitReason, setBulkExitReason] = useState("");
+
+
+
   const { darkMode } = useTheme()
-  const { patient, /**setPatient */ refreshPatients } = usePatient();
+  const { patient, /**setPatient */ refreshPatients, deletePatientsBulk, exitPatientsBulk } = usePatient();
   //Controll Dialog=> start './Reports/ControlDialog'
   const [openControllDialog, setOpenControllDialog] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
@@ -251,7 +270,39 @@ function Reports() {
     { field: 'Condition', headerName: 'الحالة', width: 100 },
 
   ];
-
+  //*select
+  // const selectedPatients = flatData.filter((patient) =>
+  //   selectedIds.includes(patient.id)
+  // );
+  const closeBulkDialog = () => {
+    if (bulkBusy) return;
+    setBulkAction(null);
+    setBulkError("");
+  };
+  const handleBulkConfirm = async () => {
+    setBulkBusy(true);
+    setBulkError("");
+    try {
+      if (bulkAction === "delete") {
+        await deletePatientsBulk(selectedIds);
+      } else if (bulkAction === "exit") {
+        if (!bulkExitTime) {
+          setBulkError("يرجى تحديد تاريخ الخروج.");
+          return;
+        }
+        await exitPatientsBulk(selectedIds, {
+          ExitData: { ExitTime: bulkExitTime, ReasonExit: bulkExitReason },
+        });
+      }
+      setSelectedIds([]);
+      setBulkAction(null);
+    } catch (error) {
+      console.error("Bulk patient action failed:", error);
+      setBulkError(error?.message || "تعذر تنفيذ العملية. حاول مرة أخرى.");
+    } finally {
+      setBulkBusy(false);
+    }
+  };
   return (
     <>
       <Box sx={{ width: "100%", mb: 2 }}>
@@ -324,9 +375,64 @@ function Reports() {
         <Stack direction="row" spacing={2} gap={2} sx={{ margin: '10px 0' }}>
           <CardData totalPaid={totalPaid} totalOwed={totalOwed} Incenter={Incenter} Outcenter={Outcenter} />
         </Stack>
+        {/**selct */}
+        {selectedIds.length > 0 && access.selectAll && (
+          <Stack
+            direction="row"
+            spacing={2}
+            sx={{
+              mb: 2,
+              p: 2,
+              alignItems: "center",
+              flexWrap: "wrap",
+              gap: 1,
+              border: "1px solid",
+              borderColor: "divider",
+              borderRadius: 2,
+            }}
+          >
+            <Typography>
+              تم تحديد {selectedIds.length} مريض
+            </Typography>
 
+            <Button
+              variant="contained"
+              color="success"
+              onClick={() => setBulkAction("exit")}
+            >
+              تسجيل خروج جماعي
+            </Button>
+
+            <Button
+              variant="contained"
+              color="error"
+              onClick={() => setBulkAction("delete")}
+            >
+              حذف المحددين
+            </Button>
+
+            <Button
+              variant="outlined"
+              onClick={() => setSelectedIds([])}
+            >
+              إلغاء التحديد
+            </Button>
+          </Stack>
+        )}
         {/*  Datatable  */}
         <DataGrid rows={flatData} columns={columns} pageSize={5} rowsPerPageOptions={[5]} autoHeight
+          checkboxSelection={access.selectAll}
+          disableRowSelectionOnClick={access.selectAll}
+          disableRowSelectionExcludeModel={access.selectAll}
+          onRowSelectionModelChange={(model) => {
+            const ids = Array.isArray(model)
+              ? model
+              : model.type === "include"
+                ? [...model.ids]
+                : [];
+
+            setSelectedIds(ids);
+          }}
 
           getRowClassName={(params) => {
             if (params.row.AmountOwed < 5000) return "GR-min";
@@ -401,6 +507,46 @@ function Reports() {
           onClose={() => setOpenDell(false)}
           rowData={selectedRow}
         />
+        <Dialog open={Boolean(bulkAction)} onClose={closeBulkDialog} dir="rtl" fullWidth maxWidth="sm">
+          <DialogTitle>{bulkAction === "delete" ? "تأكيد الحذف الجماعي" : "تسجيل خروج جماعي"}</DialogTitle>
+          <DialogContent>
+            <Typography sx={{ mb: 2 }}>
+              {bulkAction === "delete"
+                ? `هل تريد حذف ${selectedIds.length} مريضًا؟ لا يمكن التراجع عن هذا الإجراء.`
+                : `سيتم تسجيل خروج ${selectedIds.length} مريضًا بالتاريخ والسبب المحددين.`}
+            </Typography>
+            {bulkAction === "exit" && (
+              <Stack spacing={2}>
+                <TextField
+                  label="تاريخ الخروج"
+                  type="date"
+                  value={bulkExitTime}
+                  onChange={(event) => setBulkExitTime(event.target.value)}
+                  InputLabelProps={{ shrink: true }}
+                  fullWidth
+                />
+                <TextField
+                  label="سبب الخروج"
+                  value={bulkExitReason}
+                  onChange={(event) => setBulkExitReason(event.target.value)}
+                  fullWidth
+                />
+              </Stack>
+            )}
+            {bulkError && <Typography color="error" sx={{ mt: 2 }}>{bulkError}</Typography>}
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={closeBulkDialog} disabled={bulkBusy}>إلغاء</Button>
+            <Button
+              onClick={handleBulkConfirm}
+              disabled={bulkBusy || selectedIds.length === 0}
+              variant="contained"
+              color={bulkAction === "delete" ? "error" : "success"}
+            >
+              {bulkBusy ? "جارٍ التنفيذ..." : bulkAction === "delete" ? "تأكيد الحذف" : "تأكيد الخروج"}
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Box>
     </>
   )

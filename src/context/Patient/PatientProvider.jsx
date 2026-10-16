@@ -217,6 +217,75 @@ export default function PatientsProvider({ children }) {
 
         return result;
     };
+
+    const deletePatientsBulk = async (ids) => {
+        const uniqueIds = [...new Set(ids)];
+
+        if (uniqueIds.length === 0) return;
+
+        await PatientServices.deletePatientsBatch(uniqueIds);
+
+        setPatient((prev) =>
+            prev.filter((p) => !uniqueIds.includes(p.id))
+        );
+    };
+    const exitPatientsBulk = async (ids, updatedFields) => {
+        const uniqueIds = [...new Set(ids)];
+
+        if (uniqueIds.length === 0) return;
+
+        const selectedPatients = patient.filter((p) =>
+            uniqueIds.includes(p.id)
+        );
+
+        if (selectedPatients.length !== uniqueIds.length) {
+            throw new Error(
+                "بعض المرضى المحددين غير موجودين في البيانات الحالية."
+            );
+        }
+
+        const updatedPatients = selectedPatients.map((current) => {
+            const numberDays = CalcDate(
+                normalizeDateSafe(current.EnteryData?.EntryTime),
+                normalizeDateSafe(updatedFields.ExitData?.ExitTime)
+            );
+
+            const amountOwed = CalcOwed(
+                numberDays,
+                current.FinancialData?.AmountPaid ?? 0
+            );
+
+            return {
+                ...current,
+
+                ExitData: {
+                    ...current.ExitData,
+                    ...updatedFields.ExitData,
+                },
+
+                EnteryData: {
+                    ...current.EnteryData,
+                    Condition: "out",
+                },
+
+                FinancialData: {
+                    ...current.FinancialData,
+                    NumberDays: numberDays,
+                    AmountOwed: amountOwed,
+                },
+            };
+        });
+
+        await PatientServices.updatePatientsBatch(updatedPatients);
+
+        const updatedById = new Map(
+            updatedPatients.map((p) => [p.id, p])
+        );
+
+        setPatient((prev) =>
+            prev.map((p) => updatedById.get(p.id) ?? p)
+        );
+    };
     return (
         <PatientsContext.Provider
             value={{
@@ -232,7 +301,9 @@ export default function PatientsProvider({ children }) {
 
                 // setPatient,
                 preparePatientImport,
-                importPatients
+                importPatients,
+                deletePatientsBulk,
+                exitPatientsBulk
             }}
         >
             {children}
