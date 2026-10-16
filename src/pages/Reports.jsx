@@ -16,7 +16,10 @@ import useTheme from "../context/ThemeMode/useTheme";
 
 import { InputAdornment, Tooltip, } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import YardIcon from '@mui/icons-material/Yard';
 
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
 //***** */
 function Reports() {
   const { darkMode } = useTheme()
@@ -226,17 +229,9 @@ function Reports() {
   const Outcenter = flatData.filter((n) => n.Condition == "out").length;
   //--------------------------------------------Columns--------------------------------------------//
   const columns = [
-    { field: 'Num', headerName: 'م', width: 50 },
-    { field: 'Name', headerName: 'الاسم', width: 200 },
-    { field: 'EntryTime', headerName: 'تاريخ الدخول', width: 200 },
-    { field: 'NumberDays', headerName: 'عدد الأيام', width: 100 },
-    { field: 'AmountPaid', headerName: 'المدفوع', width: 100 },
-    { field: 'AmountOwed', headerName: 'المتبقي', width: 100 },
-    { field: 'TypeDiseas', headerName: 'نوع الحالة', width: 100 },
-    { field: 'Address', headerName: 'العنوان', width: 100 },
-    { field: 'Condition', headerName: 'الحالة', width: 100 },
+    { field: 'Num', headerName: 'م', width: 60 },
     {
-      field: 'actions', headerName: 'إجراءات', width: 100,
+      field: 'actions', headerName: <YardIcon />, width: 40,
       renderCell: (params) => (
         <Stack direction="row" spacing={1} gap={1} sx={{ alignItems: 'center', height: '100%' }}>
           <IconButton color="primary" size="small" onClick={() => handleOpenDialog(params.row)}
@@ -246,6 +241,15 @@ function Reports() {
         </Stack>
       ),
     },
+    { field: 'Name', headerName: 'الاسم', width: 250 },
+    { field: 'EntryTime', headerName: 'تاريخ الدخول', width: 150 },
+    { field: 'NumberDays', headerName: 'عدد الأيام', width: 100 },
+    { field: 'AmountPaid', headerName: 'المدفوع', width: 100 },
+    { field: 'AmountOwed', headerName: 'المتبقي', width: 100 },
+    { field: 'TypeDiseas', headerName: 'نوع الحالة', width: 100 },
+    { field: 'Address', headerName: 'العنوان', width: 100 },
+    { field: 'Condition', headerName: 'الحالة', width: 100 },
+
   ];
 
   return (
@@ -323,7 +327,7 @@ function Reports() {
 
         {/*  Datatable  */}
         <DataGrid rows={flatData} columns={columns} pageSize={5} rowsPerPageOptions={[5]} autoHeight
-          dir='rtl'
+
           getRowClassName={(params) => {
             if (params.row.AmountOwed < 5000) return "GR-min";
             if (params.row.AmountOwed >= 5000 && params.row.AmountOwed <= 9000) return "YW-normal";
@@ -343,6 +347,9 @@ function Reports() {
             },
             '& .MuiDataGrid-cell': {
               fontFamily: 'Tahoma, sans-serif', // خط الخلايا
+              justifyContent: 'flex-start',
+              textAlign: 'right',
+              paddingRight: '8px',
             },
             // 
             '& .GR-min': {

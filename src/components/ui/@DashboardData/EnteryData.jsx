@@ -1,7 +1,7 @@
-import {memo} from "react"
+import { memo } from "react"
 
-import {Box,Paper,MenuItem,TextField,Typography} from "../../Lib/MuiComponents"
-const EnteryData = memo(function EnteryData({PaperStyle,TypographyStyle,DividerStyle,GridStyle,data,onChange}) {
+import { Box, Paper, MenuItem, TextField, Typography } from "../../Lib/MuiComponents"
+const EnteryData = memo(function EnteryData({ PaperStyle, TypographyStyle, DividerStyle, GridStyle, data, onChange }) {
 
     return (
         <Paper elevation={0} sx={PaperStyle}>
@@ -15,7 +15,7 @@ const EnteryData = memo(function EnteryData({PaperStyle,TypographyStyle,DividerS
                 <Box sx={{ minWidth: 0 }}>
                     <Typography sx={{ mb: "6px", fontWeight: "bold" }}> مادة الدخول</Typography>
                     <TextField select fullWidth size="small" label='اختر هنا'
-                    value={data.EntryMaterial} onChange={onChange("EntryMaterial")}>
+                        value={data.EntryMaterial} onChange={onChange("EntryMaterial")}>
                         <MenuItem value="M10">M-10</MenuItem>
                         <MenuItem value="M12">M-12</MenuItem>
                         <MenuItem value="M13">M-13</MenuItem>
@@ -23,21 +23,21 @@ const EnteryData = memo(function EnteryData({PaperStyle,TypographyStyle,DividerS
                 </Box>
                 {/* ميعاد الدخول */}
                 <Box>
-                    <Typography sx={{ mb: "6px", fontWeight: "bold", color: 'red' }}> ميعاد الدخول </Typography>
+                    <Typography sx={{ mb: "6px", fontWeight: "bold", color: 'red' }}> ميعاد الدخول  * </Typography>
                     <TextField type="date" fullWidth size="small"
-                    value={data.EntryTime} onChange={onChange("EntryTime")}/>
+                        value={data.EntryTime} onChange={onChange("EntryTime")} required />
                 </Box>
                 {/* نوع المخدرات */}
                 <Box>
                     <Typography sx={{ mb: "6px", fontWeight: "bold", color: "red" }}> نوع المخدرات</Typography>
                     <TextField fullWidth size="small"
-                        value={data.TypeDisease} onChange={onChange("TypeDisease")}/>
+                        value={data.TypeDisease} onChange={onChange("TypeDisease")} />
                 </Box>
                 {/* رقم الكود المجلس */}
                 <Box>
                     <Typography sx={{ mb: "6px", fontWeight: "bold" }}> رقم الكود المجلس</Typography>
                     <TextField fullWidth size="small" type="number"
-                        value={data.CouncilCode} onChange={onChange("CouncilCode")}/>
+                        value={data.CouncilCode} onChange={onChange("CouncilCode")} />
                 </Box>
             </Box>
         </Paper>

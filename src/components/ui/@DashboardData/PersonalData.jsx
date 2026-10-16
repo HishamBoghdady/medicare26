@@ -1,7 +1,7 @@
-import {memo} from "react"
+import { memo } from "react"
 
-import {Box,Paper,TextField,Typography,Radio,MenuItem,RadioGroup,FormControlLabel} from "../../Lib/MuiComponents"
-const PersonalData =memo(function({ PaperStyle, TypographyStyle, DividerStyle, GridStyle,data,onChange})  {
+import { Box, Paper, TextField, Typography, Radio, MenuItem, RadioGroup, FormControlLabel } from "../../Lib/MuiComponents"
+const PersonalData = memo(function ({ PaperStyle, TypographyStyle, DividerStyle, GridStyle, data, onChange }) {
 
     return (
         <Paper elevation={0} sx={PaperStyle}>
@@ -12,14 +12,14 @@ const PersonalData =memo(function({ PaperStyle, TypographyStyle, DividerStyle, G
             {/* Grid */}
             <Box sx={GridStyle}>
                 <Box>
-                    <Typography sx={{ mb: 2, fontWeight: "bold", color: '#ff0000ff' }}>الاسم</Typography>
+                    <Typography sx={{ mb: 2, fontWeight: "bold", color: '#ff0000ff' }}>الاسم *</Typography>
                     <TextField label="" fullWidth size="small" type="text" sx={{ '& .MuiInputLabel-root': { color: '#ff0000ff', fontWeight: 'bold' } }}
-                        value={data.Name} onChange={onChange('Name')} />
+                        value={data.Name} onChange={onChange('Name')} required />
                 </Box>
                 <Box >
-                    <Typography sx={{ mb: 2, fontWeight: "bold", color: '#ff0000ff' }}>العنوان </Typography>
+                    <Typography sx={{ mb: 2, fontWeight: "bold", color: '#ff0000ff' }}>العنوان *</Typography>
                     <TextField label="" fullWidth type="text" size="small" sx={{ '& .MuiInputLabel-root': { color: '#ff0000ff', fontWeight: 'bold' } }}
-                        value={data.Address} onChange={onChange('Address')} />
+                        value={data.Address} onChange={onChange('Address')} required />
                 </Box>
                 <Box>
                     <Typography sx={{ mb: 2, fontWeight: "bold", color: '#ff0000ff' }}>الرقم القومي </Typography>
@@ -76,6 +76,6 @@ const PersonalData =memo(function({ PaperStyle, TypographyStyle, DividerStyle, G
             </Box>
         </Paper>
     )
-}) 
+})
 
 export default PersonalData
