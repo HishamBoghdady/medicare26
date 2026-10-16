@@ -1,88 +1,27 @@
-import { useState/*, useEffect*/ } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import useTheme from '../../context/ThemeMode/useTheme';
 //Import MUI Library
 import { pink } from '@mui/material/colors';
-
 import { Box, Menu, AppBar, Avatar, Button, Toolbar, Tooltip, MenuItem, Container, IconButton, Typography } from "../Lib/MuiComponents"
 import {
-  MenuIcon, LogoutIcon, Brightness4, Brightness7, SettingsIcon, CoPresentIcon,
-  SummarizeIcon, AccountBoxIcon, PersonAddAltIcon, AccountCircleIcon,
-  AccountBalanceWalletIcon, AdminPanelSettingsIcon, GroupAddIcon
+  MenuIcon, LogoutIcon, Brightness4, Brightness7, SettingsIcon, CoPresentIcon, AdminPanelSettingsIcon,
+  SummarizeIcon, AccountBoxIcon, PersonAddAltIcon, AccountBalanceWalletIcon, GroupAddIcon
 } from "../Lib/MuiIcon"
+//Component Exits
 import AlertDialog from './DialogExit';
+//auth user profile
 import useAuth from "../../context/auth/useAuth"
-
+//permissions
 import { getRoleAccess } from "../../config/rolePermissions";
-// const roleAccessMap = {
-//   admin: {
-//     /* Setting */
-//     createUser: true,
-//     manageUsers: true,
-//     viewAccount: true,
-//     MangeData: true,
-//     logout: true,
-//     /* Pages */
-//     newpatient: true,
-//     session: true,
-//     money: true,
-//     searsh: true,
-//   },
-//   manager: {
-//     /* Setting */
-//     createUser: false,
-//     manageUsers: false,
-//     viewAccount: true,
-//     MangeData: false,
-//     logout: true,
-//     /* Pages */
-//     newpatient: true,
-//     session: true,
-//     money: true,
-//     searsh: true,
-//   },
-//   client: {
-//     /* Setting */
-//     createUser: false,
-//     manageUsers: false,
-//     viewAccount: false,
-//     MangeData: false,
-//     logout: true,
-//     /* Pages */
-//     newpatient: false,
-//     session: false,
-//     money: false,
-//     searsh: true,
-//   },
-// };
+
 function Navbar() {
-  const [open, setopen] = useState(false)
   const navigate = useNavigate();
-
-  // const { user, logout } = useAuth()
   const { user, logout } = useAuth();
-
   const access = getRoleAccess(user?.role);
-  // const [access, setAccess] = useState({
-  //   createUser: false,
-  //   manageUsers: false,
-  //   viewAccount: false,
-  //   MangeData: false,
-  //   logout: false,
-  //   newpatient: false,
-  //   session: false,
-  //   money: false,
-  //   searsh: false,
-  // });
-
-  // useEffect(() => {
-  //   const role = user?.role?.toLowerCase();
-  //   // eslint-disable-next-line react-hooks/set-state-in-effect
-  //   setAccess(roleAccessMap[role] || roleAccessMap.client); // fallback
-  // }, [user?.role]);
-
   const { darkMode, toggleDarkMode } = useTheme();
 
+  const [open, setopen] = useState(false)
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -90,8 +29,6 @@ function Navbar() {
   const handleOpenUserMenu = (event) => { setAnchorElUser(event.currentTarget); };
   const handleCloseNavMenu = () => { setAnchorElNav(null); };
   const handleCloseUserMenu = () => { setAnchorElUser(null); };
-
-  // const {logout}=useUser()
 
   const settings = [
     { id: 1, label: "Create User", path: "/dashboard/create", icon: <GroupAddIcon />, visible: access.createUser },

@@ -1,12 +1,4 @@
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  Box,
-  Container,
-  Paper,
-} from "../Lib/MuiComponents";
+import { AppBar, Toolbar, Typography, Button, Box, Container, Paper, } from "../Lib/MuiComponents";
 import { useNavigate } from "react-router-dom";
 
 const Error = () => {

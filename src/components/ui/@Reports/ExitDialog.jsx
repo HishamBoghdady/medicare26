@@ -1,11 +1,7 @@
 //Import Hooks
 import { useState, useEffect } from 'react'
 //Import MUI
-import {Stack,Button,Dialog,TextField,DialogContent,DialogActions} from "../../Lib/MuiComponents"
-
-
-// import {} from "../../Lib/MuiComponents"
-// import {} from "../../Lib/MuiComponents"
+import { Stack, Button, Dialog, TextField, DialogContent, DialogActions } from "../../Lib/MuiComponents"
 //Import Context
 import usePatient from "../../../context/Patient/usePatient";
 

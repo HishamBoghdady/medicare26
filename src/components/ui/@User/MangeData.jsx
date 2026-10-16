@@ -1,19 +1,11 @@
 import { useRef, useState } from "react";
 
 import {
-    Alert,
-    Box,
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogTitle,
-    Stack,
-    Typography,
-} from "@mui/material";
-import { MenuItem, Select } from "@mui/material";
-import DownloadIcon from "@mui/icons-material/Download";
-import UploadFileIcon from "@mui/icons-material/UploadFile";
+    Alert, Box, Button, Dialog, DialogActions, Select,
+    DialogContent, DialogTitle, Stack, Typography, MenuItem
+} from "../../Lib/MuiComponents";
+
+import { DownloadIcon, UploadFileIcon } from "../../Lib/MuiIcon";
 
 import {
     createPatientBackup,

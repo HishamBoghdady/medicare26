@@ -1,9 +1,6 @@
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import CardActionArea from "@mui/material/CardActionArea";
+import { Box, Card, CardContent, Typography, CardActionArea } from "../../Lib/MuiComponents";
 import viewDate from "../../../utils/date/viewDate";
+
 function CardData({ totalPaid, totalOwed, Incenter, Outcenter }) {
     let { TheDate, TheDay } = viewDate()
     return (

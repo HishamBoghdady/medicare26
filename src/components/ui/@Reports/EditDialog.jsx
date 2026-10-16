@@ -1,10 +1,11 @@
 //Import Hooks
 import { useState, useEffect } from "react";
 //Import MUI
-import {Box,Grid,Stack,Dialog,Button,Divider,TextField,Typography,DialogContent} from "../../Lib/MuiComponents"
+import { Box, Grid, Stack, Dialog, Button, Divider, TextField, Typography, DialogContent } from "../../Lib/MuiComponents"
 //Import Context
 import usePatient from "../../../context/Patient/usePatient";
-import {normalizeDateSafe} from '../../../utils/index';
+import { normalizeDateSafe } from '../../../utils/index';
+
 export default function EditDialog({ open, onClose, rowData }) {
     const { updatePatient } = usePatient();
 
