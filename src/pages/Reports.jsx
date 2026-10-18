@@ -23,12 +23,14 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { getRoleAccess } from "../config/rolePermissions";
 import useAuth from "../context/auth/useAuth"
 
+import CloseIcon from "@mui/icons-material/Close";
+// import IconButton from "@mui/material/IconButton";
 //***** */
 function Reports() {
   const { user } = useAuth();
 
   const access = getRoleAccess(user?.role);
-  // const [selectedColumn, setSelectedColumn] = useState(null);
+  const [selectedColumn, setSelectedColumn] = useState(null);
   /**select */
   const [selectedIds, setSelectedIds] = useState([]);
   const [bulkAction, setBulkAction] = useState(null);
@@ -250,7 +252,7 @@ function Reports() {
   //--------------------------------------------Columns--------------------------------------------//
   const columns = [
     {
-      field: 'actions', headerName: <YardIcon />, width: 30,
+      field: 'actions', headerName: <YardIcon />, width: 20,
       renderCell: (params) => (
         <Stack direction="row" spacing={1} gap={1} sx={{ alignItems: 'center', height: '100%' }}>
           <IconButton color="primary" size="small" onClick={() => handleOpenDialog(params.row)}
@@ -264,17 +266,40 @@ function Reports() {
       field: 'Num', headerName: 'م', width: 60, renderCell: (params) => (
         <Box sx={{ direction: 'ltr', textAlign: 'left', width: '100%' }}> {params.value} </Box>),
     },
-    { field: 'Name', headerName: 'الاسم', width: 230 },
-    { field: 'EntryTime', headerName: 'تاريخ الدخول', width: 130 },
-    { field: 'NumberDays', headerName: 'عدد الأيام', width: 60 },
-    { field: 'AmountPaid', headerName: 'المدفوع', width: 100 },
     {
-      field: 'AmountOwed', headerName: 'المتبقي', width: 90,
-      // cellClassName: (params) => selectedColumn === params.field ? 'selected-column' : '',
+      field: 'Name', headerName: 'الاسم', width: 220, renderCell: (params) => (
+        <Box sx={{ textAlign: 'center', width: '100%' }}> {params.value} </Box>),
     },
-    { field: 'TypeDiseas', headerName: 'نوع الحالة', width: 140 },
-    { field: 'Address', headerName: 'العنوان', width: 130 },
-    { field: 'Condition', headerName: 'الحالة', width: 100 },
+    {
+      field: 'EntryTime', headerName: 'تاريخ الدخول', width: 140, renderCell: (params) => (
+        <Box sx={{ textAlign: 'center', width: '100%' }}> {params.value} </Box>),
+    },
+    {
+      field: 'NumberDays', headerName: 'عدد الأيام', width: 55, renderCell: (params) => (
+        <Box sx={{ textAlign: 'center', width: '100%' }}> {params.value} </Box>),
+    },
+    {
+      field: 'AmountPaid', headerName: 'المدفوع', width: 80, renderCell: (params) => (
+        <Box sx={{ textAlign: 'center', width: '100%' }}> {params.value} </Box>),
+    },
+    {
+      field: 'AmountOwed', headerName: 'المتبقي', width: 80,
+      renderCell: (params) => (<Box sx={{ textAlign: 'center', width: '100%', backgroundColor: '#ECF0F3' }}> {params.value} </Box>),
+      cellClassName: (params) => selectedColumn === params.field ? 'selected-column' : '',
+    },
+    {
+      field: 'TypeDiseas', headerName: 'نوع الحالة', width: 140,
+      renderCell: (params) => (<Box sx={{ textAlign: 'center', width: '100%', backgroundColor: '#ECF0F3' }}> {params.value} </Box>),
+      cellClassName: (params) => selectedColumn === params.field ? 'selected-column' : '',
+    },
+    {
+      field: 'Address', headerName: 'العنوان', width: 130, renderCell: (params) => (
+        <Box sx={{ textAlign: 'center', width: '100%' }}> {params.value} </Box>),
+    },
+    {
+      field: 'Condition', headerName: 'الحالة', width: 100, renderCell: (params) => (
+        <Box sx={{ textAlign: 'center', width: '100%' }}> {params.value} </Box>),
+    },
 
   ];
   //*select
@@ -327,6 +352,7 @@ function Reports() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             size="small"
+
             slotProps={{
               input: {
                 startAdornment: (
@@ -334,8 +360,21 @@ function Reports() {
                     <SearchIcon color="action" />
                   </InputAdornment>
                 ),
+                endAdornment: searchTerm && (
+                  <InputAdornment position="end">
+                    <IconButton
+                      size="small"
+                      aria-label="مسح البحث"
+                      onClick={() => setSearchTerm("")}
+                      edge="end"
+                    >
+                      <CloseIcon fontSize="small" />
+                    </IconButton>
+                  </InputAdornment>
+                ),
               },
             }}
+
             sx={{
               flex: 1, minWidth: 0,
               "& .MuiOutlinedInput-root": {
@@ -446,22 +485,37 @@ function Reports() {
             if (params.row.AmountOwed >= 5000 && params.row.AmountOwed <= 9000) return "YW-normal";
             return "red-high";
           }}
-          // onCellClick={(params) => {
-          //   setSelectedColumn(params.field);
-          // }}
+          onCellClick={(params) => {
+            setSelectedColumn(params.field);
+          }}
           sx={{
+            '& .selected-column': {
+              backgroundColor: '#f70000 !important',
+            },
+
+            '& .selected-column-header': {
+              backgroundColor: '#90CAF9 !important',
+              color: '#000 !important',
+            },
+
+            '& .MuiDataGrid-columnHeader': {
+              backgroundColor: '#1565c0',
+              color: '#fff',
+            },
             // '& .MuiDataGrid-columnHeaders': { backgroundColor: '#1565c0', color: '#fff', fontWeight: 'bold', },
-            '& .MuiDataGrid-columnHeader': { backgroundColor: '#1565c0', color: '#fff', },
+            /** */
+            // '& .MuiDataGrid-columnHeader': { backgroundColor: '#1565c0', color: '#fff', },
+            // '& .selected-column': {backgroundColor: '#E3EFFA',},
+            /* */
             // '& .MuiDataGrid-columnHeaderTitle': {fontWeight: 'bold',},
             // '& .MuiDataGrid-columnSeparator': {color: '#90caf9',},
 
-            // '& .selected-column': {
-            //   backgroundColor: '#E3EFFA',
-            // },
-            // '& .selected-column:hover': {
-            //   backgroundColor: '#1bddff9f',
-            // },
+
+            '& .selected-column:hover': {
+              backgroundColor: '#1bddff9f',
+            },
             direction: 'rtl',
+            textAlign: 'center',
             // backgroundColor: '#ffffffff',
             fontFamily: 'Arial, sans-serif', // تغيير الخط العام
             fontSize: '20px',
