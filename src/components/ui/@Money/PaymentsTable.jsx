@@ -93,10 +93,13 @@ export default function PaymentsTable({ patient }) {
   const handleAddRow = () => {
     pushHistory(rows);
 
+    const paymentId = globalThis.crypto?.randomUUID?.()
+      ?? `payment-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
     const newRows = [
       ...rows.map((r) => ({ ...r })),
       {
-        id: crypto.randomUUID(),
+        id: paymentId,
         PaymentDate: new Date().toISOString().slice(0, 10),
         AmountPaid: 0,
       },
@@ -265,7 +268,7 @@ export default function PaymentsTable({ patient }) {
       </TableContainer>
 
       <Stack direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ mt: 3 }}>
-        <Button variant="contained" startIcon={<AddIcon />} onClick={handleAddRow}>
+        <Button type="button" variant="contained" startIcon={<AddIcon />} onClick={handleAddRow}>
           إضافة دفعة
         </Button>
 

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import AuthContext from "./AuthContext";
-import { ROLE_PERMISSIONS } from "../../guards/permissions";
 
 import { observeAuthState, signUp, signIn, signOut } from "../../services/authServices";
 export default function AuthProvider(props) {

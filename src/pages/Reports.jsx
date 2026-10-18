@@ -28,6 +28,7 @@ function Reports() {
   const { user } = useAuth();
 
   const access = getRoleAccess(user?.role);
+  // const [selectedColumn, setSelectedColumn] = useState(null);
   /**select */
   const [selectedIds, setSelectedIds] = useState([]);
   const [bulkAction, setBulkAction] = useState(null);
@@ -248,9 +249,8 @@ function Reports() {
   const Outcenter = flatData.filter((n) => n.Condition == "out").length;
   //--------------------------------------------Columns--------------------------------------------//
   const columns = [
-    { field: 'Num', headerName: 'م', width: 60 },
     {
-      field: 'actions', headerName: <YardIcon />, width: 40,
+      field: 'actions', headerName: <YardIcon />, width: 30,
       renderCell: (params) => (
         <Stack direction="row" spacing={1} gap={1} sx={{ alignItems: 'center', height: '100%' }}>
           <IconButton color="primary" size="small" onClick={() => handleOpenDialog(params.row)}
@@ -260,13 +260,20 @@ function Reports() {
         </Stack>
       ),
     },
-    { field: 'Name', headerName: 'الاسم', width: 250 },
-    { field: 'EntryTime', headerName: 'تاريخ الدخول', width: 150 },
-    { field: 'NumberDays', headerName: 'عدد الأيام', width: 100 },
+    {
+      field: 'Num', headerName: 'م', width: 60, renderCell: (params) => (
+        <Box sx={{ direction: 'ltr', textAlign: 'left', width: '100%' }}> {params.value} </Box>),
+    },
+    { field: 'Name', headerName: 'الاسم', width: 230 },
+    { field: 'EntryTime', headerName: 'تاريخ الدخول', width: 130 },
+    { field: 'NumberDays', headerName: 'عدد الأيام', width: 60 },
     { field: 'AmountPaid', headerName: 'المدفوع', width: 100 },
-    { field: 'AmountOwed', headerName: 'المتبقي', width: 100 },
-    { field: 'TypeDiseas', headerName: 'نوع الحالة', width: 100 },
-    { field: 'Address', headerName: 'العنوان', width: 100 },
+    {
+      field: 'AmountOwed', headerName: 'المتبقي', width: 90,
+      // cellClassName: (params) => selectedColumn === params.field ? 'selected-column' : '',
+    },
+    { field: 'TypeDiseas', headerName: 'نوع الحالة', width: 140 },
+    { field: 'Address', headerName: 'العنوان', width: 130 },
     { field: 'Condition', headerName: 'الحالة', width: 100 },
 
   ];
@@ -439,8 +446,21 @@ function Reports() {
             if (params.row.AmountOwed >= 5000 && params.row.AmountOwed <= 9000) return "YW-normal";
             return "red-high";
           }}
-
+          // onCellClick={(params) => {
+          //   setSelectedColumn(params.field);
+          // }}
           sx={{
+            // '& .MuiDataGrid-columnHeaders': { backgroundColor: '#1565c0', color: '#fff', fontWeight: 'bold', },
+            '& .MuiDataGrid-columnHeader': { backgroundColor: '#1565c0', color: '#fff', },
+            // '& .MuiDataGrid-columnHeaderTitle': {fontWeight: 'bold',},
+            // '& .MuiDataGrid-columnSeparator': {color: '#90caf9',},
+
+            // '& .selected-column': {
+            //   backgroundColor: '#E3EFFA',
+            // },
+            // '& .selected-column:hover': {
+            //   backgroundColor: '#1bddff9f',
+            // },
             direction: 'rtl',
             // backgroundColor: '#ffffffff',
             fontFamily: 'Arial, sans-serif', // تغيير الخط العام
@@ -454,7 +474,7 @@ function Reports() {
             '& .MuiDataGrid-cell': {
               fontFamily: 'Tahoma, sans-serif', // خط الخلايا
               justifyContent: 'flex-start',
-              textAlign: 'right',
+              textAlign: 'start',
               paddingRight: '8px',
             },
             // 
@@ -471,7 +491,10 @@ function Reports() {
               // backgroundColor: '#51ff008e !important',
               color: '#0026ffff !important',
             },
-          }} />
+          }}
+
+
+        />
         {/*ControlDialog*/}
         <ControlDialog
           open={openControllDialog}

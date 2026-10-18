@@ -9,17 +9,6 @@ export const getPermissionsByRole = (role) => {
     return ROLE_PERMISSIONS[role] || [];
 };
 
-// export const hasPermission = (role, permission) => {
-//     return getPermissionsByRole(role).includes(permission);
-// };
-
-/////////////////////
-/**
- * يدعم:
- * - role permissions
- * - user.permissions (إضافات فردية)
- * - user.deniedPermissions (منع فردي)
- */
 export const hasPermission = (userOrRole, permission) => {
     if (!permission) return true;
 

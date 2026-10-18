@@ -13,6 +13,7 @@ import { normalizeDateSafe } from "../utils/index";
 import PaymentsTable from '../components/ui/@Money/PaymentsTable';
 
 function Money() {
+
     const [selectedPatientId, setSelectedPatientId] = useState("");
     const [MoneyDetails, setMoneyDetails] = useState({ PaymentDate: '', AmountPaid: '' });
 
@@ -36,9 +37,16 @@ function Money() {
         setMoneyDetails({ PaymentDate: '', AmountPaid: '' });
     }
 
+    // 
+
     function Reset() {
-        setMoneyDetails({ PaymentDate: '', AmountPaid: '' });
+        setSelectedPatientId("");
+        setMoneyDetails({
+            PaymentDate: '',
+            AmountPaid: ''
+        });
     }
+
 
     const activePatients = patient.filter(
         p => p.EnteryData?.Condition !== "out"
@@ -53,7 +61,7 @@ function Money() {
                 </Typography>
 
                 <Box sx={{ p: 2, display: "flex", flexDirection: { xs: "column", md: "row" }, gap: { xs: 1.5, md: 3 }, direction: "rtl", width: "100%" }}>
-                    <Box sx={{ width: "100%" }}>
+                    {/* <Box sx={{ width: "100%" }}>
                         <Autocomplete
                             fullWidth
                             size="small"
@@ -68,7 +76,50 @@ function Money() {
                                 <TextField {...params} label="بحث عن الاسم" />
                             )}
                         />
+                    </Box> */}
+
+                    <Box sx={{ width: "100%" }}>
+                        <Autocomplete
+                            fullWidth
+                            size="small"
+                            disablePortal
+                            options={activePatients}
+                            getOptionLabel={(option) =>
+                                `${option?.PersonalData?.Name || ""} - ${normalizeDateSafe(option?.EnteryData?.EntryTime) || ""
+                                }`
+                            }
+                            value={selectedPatient}
+                            onChange={(event, newValue) => {
+                                setSelectedPatientId(newValue?.id || "");
+                            }}
+                            renderOption={(props, option) => (
+                                <Box
+                                    component="li"
+                                    {...props}
+                                    sx={{
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        alignItems: "flex-start",
+                                        gap: 0.5,
+                                        py: 1,
+                                    }}
+                                >
+                                    <Typography fontWeight="bold">
+                                        {option?.PersonalData?.Name || ""}
+                                    </Typography>
+
+                                    <Typography variant="body2" color="#ff0000" fontWeight="bold">
+                                        تاريخ الدخول:{" "}
+                                        {normalizeDateSafe(option?.EnteryData?.EntryTime) || ""}
+                                    </Typography>
+                                </Box>
+                            )}
+                            renderInput={(params) => (
+                                <TextField {...params} label="بحث عن الاسم" />
+                            )}
+                        />
                     </Box>
+
 
                     <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: 1.5, md: 3 }, width: "100%" }}>
                         <TextField
@@ -84,6 +135,7 @@ function Money() {
                             size="small"
                             value={normalizeDateSafe(selectedPatient?.EnteryData?.EntryTime) || ""}
                             slotProps={{ input: { readOnly: true } }}
+                        // color: "red" 
                         />
                     </Box>
                 </Box>
