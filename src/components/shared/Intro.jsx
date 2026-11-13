@@ -1,6 +1,7 @@
 const Intro = () => {
   return (
-    <>Intro
+    <>
+      Hello world
     </>
   )
 }
