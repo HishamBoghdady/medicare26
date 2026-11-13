@@ -15,6 +15,8 @@ import useAuth from "../../context/auth/useAuth"
 //permissions
 import { getRoleAccess } from "../../config/rolePermissions";
 
+// import { useNavigate } from "react-router-dom";
+
 function Navbar() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
@@ -64,8 +66,11 @@ function Navbar() {
 
           {/* Start Desktop View */}
           {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-          <Box component="img" src={'../../public/Elmanar.jpg'} alt="Logo"
-            sx={{ display: { xs: 'none', md: 'flex', width: '50px', borderRadius: '50%' }, mr: 1 }} />
+          <Box src={'../../public/Elmanar.jpg'} alt="Logo"
+            sx={{ display: { xs: 'none', md: 'flex', width: '50px', borderRadius: '50%' }, mr: 1 }}
+            component={"img"}
+            onClick={() => navigate("/dashboard/about")}
+          />
           <Typography variant="h6" noWrap component="a"
             sx={{
               mr: 2, display: { xs: 'none', md: 'flex' }, fontFamily: 'monospace',

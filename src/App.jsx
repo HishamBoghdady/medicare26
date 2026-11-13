@@ -41,13 +41,7 @@ function App() {
         <Route path="/dashboard" element={<MainLayout />}>
           <Route index element={<Intro />} />
           <Route path='newpatient' element={<DashboardData />} />
-
           <Route path='session' element={<Sessions />} />
-          {/* <Route path="session" element={
-                <ProtectedRoute roles={["manager"]}>
-                  <Sessions />
-                </ProtectedRoute>
-          }/> */}
 
           <Route path='money' element={<Money />} />
           <Route path='searsh' element={<Reports />} />
