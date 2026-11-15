@@ -66,7 +66,7 @@ function Navbar() {
 
           {/* Start Desktop View */}
           {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-          <Box src={'../../public/Elmanar.jpg'} alt="Logo"
+          <Box src="/Elmanar.jpg" alt="Logo"
             sx={{ display: { xs: 'none', md: 'flex', width: '50px', borderRadius: '50%' }, mr: 1 }}
             component={"img"}
             onClick={() => navigate("/dashboard/about")}
@@ -119,7 +119,7 @@ function Navbar() {
           {/* End Desktop View */}
 
           {/* Start Phone View */}
-          <Box component="img" src="../../public/Elmanar.jpg" alt="Logo"
+          <Box component="img" src="/Elmanar.jpg" alt="Logo"
             sx={{ display: { xs: 'flex', md: 'none', width: '50px', borderRadius: '50%' }, mr: 1 }} />
 
           <Typography variant="h5" noWrap component="a"

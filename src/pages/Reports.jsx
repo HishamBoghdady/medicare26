@@ -17,19 +17,17 @@ import useTheme from "../context/ThemeMode/useTheme";
 import { InputAdornment, Tooltip, } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import YardIcon from '@mui/icons-material/Yard';
+import CloseIcon from "@mui/icons-material/Close";
 
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { getRoleAccess } from "../config/rolePermissions";
 import useAuth from "../context/auth/useAuth"
 
-import CloseIcon from "@mui/icons-material/Close";
-// import IconButton from "@mui/material/IconButton";
 //***** */
 function Reports() {
   const { user } = useAuth();
 
   const access = getRoleAccess(user?.role);
+  //select column for style
   const [selectedColumn, setSelectedColumn] = useState(null);
   /**select */
   const [selectedIds, setSelectedIds] = useState([]);
