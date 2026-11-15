@@ -13,7 +13,7 @@ import { SchemeDB } from '../guards/SchemeDB'
 import { CalcMoney, CalcDate, CalcOwed } from "../utils/index";
 
 import usePatients from "../context/Patient/usePatient"
-
+import toast from "react-hot-toast";
 
 const PaperStyle = { direction: "rtl", border: "2px solid #dee2e6", borderRadius: "8px", p: "20px", mb: "20px" };
 const TypographyStyle = { mb: 2, fontWeight: "bold", color: "#0d47a1", }
@@ -21,7 +21,7 @@ const DividerStyle = { width: "100%", height: "1px", backgroundColor: "#d0d0d0",
 const GridStyle = { display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))", gap: "20px", mb: "20px", }
 
 export default function DashboardData() {
-  
+
   const { addpatient } = usePatients();
 
   const [enteryData, setEnteryData] = useState(SchemeDB.EnteryData);
@@ -99,14 +99,18 @@ export default function DashboardData() {
     try {
       // ✅ إضافة المريض إلى Firebase
       await addpatient(PatientAdd);
+      toast.success("تمت إضافة الحالة بنجاح");
 
       setEnteryData(SchemeDB.EnteryData);
       setPersonalData(SchemeDB.PersonalData);
       setAdmissionApplicant(SchemeDB.AdmissionApplicant);
       setAddDetailMoney({ PaymentDate: '', AmountPaid: '' });
       console.log("Patient added successfully to Firebase:", PatientAdd);
+
     } catch (error) {
+      toast.error("لم تتم إضافة الحالة بنجاح")
       console.error("Failed to add patient to Firebase:", error);
+
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

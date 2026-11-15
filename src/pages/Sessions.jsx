@@ -7,6 +7,8 @@ import { useState } from "react";
 import usePatient from '../context/Patient/usePatient';
 //Import Functions
 import { normalizeDateSafe } from "../utils/index";
+import toast from "react-hot-toast";
+
 function Sessions() {
   const [selectedPatient, setSelectedPatient] = useState(null);
   const [SessionDetails, setSessionDetails] = useState({ SessionDate: '', NumberSession: '' })
@@ -24,6 +26,7 @@ function Sessions() {
     };
 
     addSession(selectedPatient.id, session);
+    toast.success("تمت إضافة الجلسات بنجاح");
     Reset();
   }
 

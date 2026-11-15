@@ -1,5 +1,6 @@
 // Hooks from React
 import { Routes, Route, Navigate } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 //components/layout
 import MainLayout from "./components/layout/MainLayout";
 //components/shared
@@ -31,6 +32,7 @@ function App() {
 
   return (
     <>
+      <Toaster position="top-right" />
       <Routes>
         <Route path="/" element={<IntroPage />} />
         <Route path="*" element={<Error />} />
